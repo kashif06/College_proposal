@@ -5,10 +5,28 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Send Mails</div>
+                <div class="panel-heading">
+
+                  <a href="{{url('create')}}" class="btn btn-success">Create</a>
+                </div>
 
                 <div class="panel-body">
                   <table class="table">
+                    @if(Session::has('success'))
+                    <div class="alert alert-success alert-block">
+                      <strong>{{Session::get('success')}}</strong>
+                    </div>
+                    @endif
+                    @if($errors->any())
+                    <ul>
+                    @foreach($errors->all() as $error)
+                    <li class="alert alert-danger alert-block">{{$error}}</li>
+                    @endforeach
+                    <ul>
+                    <div class="alert alert-success alert-block">
+                      <strong>{{Session::get('success')}}</strong>
+                    </div>
+                    @endif
                     <thead>
                       <tr>
                         <th scope="col">College Name</th>
@@ -22,9 +40,9 @@
                           <td>{{$mail->college_name}}</td>
                           <td>{{$mail->college_address}}</td>
                           <td>
-                            <a href="edit/{{$mail->id}}" class="btn btn-success">Edit</a>
-                            <a class="btn btn-success" data-toggle="modal" data-target="#lauchModal{{$mail->id}}">Preview</a>
-                            <a href="send_mail/{{$mail->id}}" class="btn btn-primary">Send</a>
+                            <a href="preview/{{$mail->id}}" class="btn btn-primary">Preview</a>
+                            <a href="edit/{{$mail->id}}" class="btn btn-info">Edit</a>
+                            <a href="send_mail/{{$mail->id}}" class="btn btn-danger">Send</a>
 
                           </td>
                         </tr>

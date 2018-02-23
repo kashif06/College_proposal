@@ -72,15 +72,15 @@ class SendEmailController extends Controller
     public function sendMail($id){
       $user = SendEmail::find($id);
       \Mail::to($user->college_email)->send(new SendProposalOfficial($user));
+      if(\Mail::failures()){
+        return redirect('index')-with('errors','Check your mail credentials');
+      }
+      return redirect('index')->with('success',"Email has been sent");
     }
 
     public function preview($id){
       $user = SendEmail::find($id);
-      $u = new SendProposalOfficial($user);
-      return $u;
-      // $pre = $u->build();
-      // return view('email.index',compact('pre'));
-
+      return new SendProposalOfficial($user);
     }
 
 
